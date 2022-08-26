@@ -17,7 +17,7 @@ const LoginForm = () => {
     const navigate = useNavigate();
 
     const loginUser = async (val) => {
-        const url = "http://localhost:4000/api/auth/login";
+        const url = "/auth/login";
         await axios.post(url, {...val})
         .then(res => {
             localStorage.setItem("username",res.data.currentUser.username);

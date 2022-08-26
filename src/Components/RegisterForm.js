@@ -17,7 +17,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
 
     const registerUser = async (val) => {
-        const url = "http://localhost:4000/api/auth/register";
+        const url = "/auth/register";
         await axios.post(url, {...val, last_route_id:1})
         .then(res => {
             localStorage.setItem("user", JSON.stringify(res.data.user));

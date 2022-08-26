@@ -39,7 +39,7 @@ const Chat = () => {
     const [route, setRoute] = useState(null);
 
     const getRoute = async () => {
-        const url = `http://localhost:4000/api/routes/for-lesson/${routeId}`;
+        const url = `/routes/for-lesson/${routeId}`;
         await axios.get(url).then(res => {
             const data = res.data;
             setRoute({

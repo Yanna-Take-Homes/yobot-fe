@@ -3,6 +3,7 @@ import styled from "styled-components";
 import RegisterForm from "../Components/RegisterForm";
 import LoginForm from "../Components/LoginForm";
 import {Row} from "antd";
+import axios from "axios";
 
 const AuthWrapper = styled.div`{
     display: flex;
@@ -18,6 +19,10 @@ const AuthForms = styled(Row)`{
 
 const Auth = () => {
     const username = localStorage.getItem("username") || null;
+
+    axios.defaults.baseURL = 'https://yanna-yobot.herokuapp.com/api/';
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token") || null;
+
     return (
         <AuthWrapper>
             {

@@ -19,7 +19,7 @@ const PastChats = () => {
 
     const getChats = async () => {
         if(!username) return navigate("/");
-        const url = `http://localhost:4000/api/user-lessons/${userId}`;
+        const url = `/user-lessons/${userId}`;
         await axios.get(url).then(res => {
             setChats(res.data)
         });
