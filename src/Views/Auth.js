@@ -3,6 +3,7 @@ import styled from "styled-components";
 import RegisterForm from "../Components/RegisterForm";
 import LoginForm from "../Components/LoginForm";
 import {Row} from "antd";
+import {checkIfLoggedIn} from "../Utils";
 
 const AuthWrapper = styled.div`{
     display: flex;
@@ -17,7 +18,7 @@ const AuthForms = styled(Row)`{
 }`
 
 const Auth = () => {
-    const username = localStorage.getItem("username") || null;
+    const username = checkIfLoggedIn();
 
     return (
         <AuthWrapper>

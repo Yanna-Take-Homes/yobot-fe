@@ -4,6 +4,7 @@ import axios from "axios";
 import { Input, Button, Form } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useNavigate } from 'react-router-dom';
+import {setUser} from "../Utils";
 
 const FormCtn = styled(Form)`{
     display: flex;
@@ -20,9 +21,9 @@ const RegisterForm = () => {
         const url = "/auth/register";
         await axios.post(url, {...val, last_route_id:1})
         .then(res => {
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            navigate('/past-chats');
-        }).catch(err => {alert("sorry! that didn't work")});
+            setUser(res);
+            navigate('/chat');
+        }).catch(() => {alert("sorry! that didn't work")});
     }
 
     return (

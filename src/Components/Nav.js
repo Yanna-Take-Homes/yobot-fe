@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styled from "styled-components";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Button, Row} from "antd";
+import {checkIfLoggedIn} from "../Utils";
 
 const NavCtn = styled(Row)`{
   height: 8vh;
@@ -14,13 +15,16 @@ const Links = styled(Row)`{
 }`
 
 const Nav = () => {
-    const username = localStorage.getItem("username") || null;
-    const navigate = useNavigate();
+    let username = checkIfLoggedIn();
 
     const logout = () => {
         localStorage.clear();
-        navigate("/");
+        window.location.reload();
     }
+
+    useEffect(() => {
+        checkIfLoggedIn();
+    } , []);
 
     return (
         <NavCtn justify={"space-between"} align={"middle"}>
@@ -35,6 +39,3 @@ const Nav = () => {
 }
 
 export default Nav;
-
-// let user resume unfinished lesson
-// let user pick from lesson names or choose random lesson

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
 import {Button} from "antd";
+import {checkIfLoggedIn} from "../Utils";
+import {useNavigate} from "react-router-dom";
 
 const PastChatsWrapper = styled.div`{
   display: flex;
@@ -13,13 +14,12 @@ const PastChatsWrapper = styled.div`{
 }`
 
 const PastChats = () => {
-    const username = localStorage.getItem("username") || null;
-    const userId = localStorage.getItem("id") || null;
     const [chats, setChats] = useState(null);
     const navigate = useNavigate();
+    const username = checkIfLoggedIn();
 
     const getChats = async () => {
-        if(!username) return navigate("/");
+        const userId = localStorage.getItem("id") || null;
         const url = `/user-lessons/${userId}`;
         await axios.get(url).then(res => {
             setChats(res.data)
@@ -27,6 +27,7 @@ const PastChats = () => {
     }
 
     useEffect(() => {
+        !(username) && navigate("/");
         getChats().catch(() => alert("sorry! that didn't work"));
         //eslint-disable-next-line
     },[]);
