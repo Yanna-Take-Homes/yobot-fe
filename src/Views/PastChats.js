@@ -27,7 +27,7 @@ const PastChats = () => {
     }
 
     useEffect(() => {
-        !(username) && navigate("/");
+        if(!username) return navigate("/");
         getChats().catch(() => alert("sorry! that didn't work"));
         //eslint-disable-next-line
     },[]);

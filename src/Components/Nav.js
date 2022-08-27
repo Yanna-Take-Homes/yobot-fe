@@ -1,7 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {Button, Row} from "antd";
+import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
 
 const NavCtn = styled(Row)`{
@@ -15,16 +16,13 @@ const Links = styled(Row)`{
 }`
 
 const Nav = () => {
-    let username = checkIfLoggedIn();
+    const username =  checkIfLoggedIn();
+    const navigate = useNavigate();
 
     const logout = () => {
         localStorage.clear();
-        window.location.reload();
+        navigate("/");
     }
-
-    useEffect(() => {
-        checkIfLoggedIn();
-    } , []);
 
     return (
         <NavCtn justify={"space-between"} align={"middle"}>
@@ -33,7 +31,7 @@ const Nav = () => {
                 <Link to="/chat">New Chat</Link>
                 <Link to="/past-chats">Past Chats</Link>
             </Links>
-            { username && <Button type={"primary"} onClick={logout}>Logout</Button> }
+            { username ? <Button type={"primary"} onClick={logout}>Logout</Button> : <Link to="/auth">Get Started</Link> }
         </NavCtn>
     );
 }

@@ -19,7 +19,6 @@ const AuthForms = styled(Row)`{
 
 const Auth = () => {
     const username = checkIfLoggedIn();
-
     return (
         <AuthWrapper>
             {

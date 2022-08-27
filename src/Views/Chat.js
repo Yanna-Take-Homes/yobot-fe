@@ -36,6 +36,7 @@ const Blurb = styled(ChatOption)`{;
 const Chat = () => {
     const navigate = useNavigate();
     const username = checkIfLoggedIn();
+
     const [lessonArr, setLessonArr] = useState(null);
     const [route, setRoute] = useState(null);
     const [lessonName, setLessonName] = useState(null);
@@ -67,8 +68,8 @@ const Chat = () => {
     }
 
     useEffect(() => {
-        !(username) && navigate("/");
-        getRoute().catch(err => alert("sorry! that didn't work"));
+        if(!username) return navigate("/");
+        getRoute().catch(() => alert("sorry! that didn't work"));
         //eslint-disable-next-line
     }, []);
 
