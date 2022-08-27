@@ -7,6 +7,10 @@ import PastChats from "./Views/PastChats";
 import 'antd/dist/antd.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Nav from "./Components/Nav";
+import axios from "axios";
+
+axios.defaults.baseURL = 'https://yanna-yobot.herokuapp.com/api/';
+axios.defaults.headers.common['Authorization'] = localStorage.getItem("token") || null;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

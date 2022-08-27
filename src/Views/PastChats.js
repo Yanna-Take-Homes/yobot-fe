@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {Button} from "antd";
 
 const PastChatsWrapper = styled.div`{
   display: flex;
@@ -34,6 +35,7 @@ const PastChats = () => {
         <PastChatsWrapper>
             {username && <h1>Welcome Back, {username}</h1>}
             {chats && chats.length ? chats.map((chat,idx) => (<h1 key={idx}>{chat["lesson_name"]}</h1>) ): <h1>You've not done any lessons yet!</h1>}
+            <Button type={"primary"} href={"/chat"}>Start New Chat</Button>
         </PastChatsWrapper>
     );
 }
