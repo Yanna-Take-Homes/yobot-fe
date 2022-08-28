@@ -10,11 +10,10 @@ import axios from "axios";
 import Nav from "./Components/Nav";
 import Home from "./Views/Home";
 
-// const devUrl = "http://localhost:4000/api/";
-const prodUrl = "https://yanna-yobot.herokuapp.com/api/"
+const devUrl = "http://localhost:4000/api/";
+// const prodUrl = "https://yanna-yobot.herokuapp.com/api/"
 
-axios.defaults.baseURL = prodUrl;
-axios.defaults.headers.common['Authorization'] = localStorage.getItem("token") || null;
+axios.defaults.baseURL = devUrl;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

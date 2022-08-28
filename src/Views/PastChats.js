@@ -21,7 +21,9 @@ const PastChats = () => {
     const getChats = async () => {
         const userId = localStorage.getItem("id") || null;
         const url = `/user-lessons/${userId}`;
-        await axios.get(url).then(res => {
+        await axios.create({headers:{
+                Authorization: localStorage.getItem("token"),
+            }}).get(url).then(res => {
             setChats(res.data)
         });
     }

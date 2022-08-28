@@ -8,7 +8,7 @@ import {checkIfLoggedIn} from "../Utils";
 const ChatWrapper = styled(Row)`{
     margin-top: 8px;
     height: 90vh;
-    background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8adff1c4-ab1b-4927-b7cf-68304bd1975b/yobot.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220826%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220826T120152Z&X-Amz-Expires=86400&X-Amz-Signature=11ea18946aa6a4e0d4793a82411e405f4bd8f14a2cbaaad172cf117a6cfd1de2&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22yobot.jpg%22&x-id=GetObject");
+    background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8adff1c4-ab1b-4927-b7cf-68304bd1975b/yobot.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220828%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220828T002911Z&X-Amz-Expires=86400&X-Amz-Signature=ee8324300ce67ddc7bb06a66bce5b69ca6f7101c77495433d354978fafb13b68&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22yobot.jpg%22&x-id=GetObject");
     background-repeat: no-repeat;
     background-position: left;
     background-size: 25% 45%;
@@ -44,7 +44,9 @@ const Chat = () => {
     const getRoute = async () => {
         const routeId = localStorage.getItem("last_route");
         const url = `/routes/for-lesson/${routeId}`;
-        await axios.get(url).then(res => {
+        await axios.create({headers:{
+                Authorization: localStorage.getItem("token"),
+            }}).get(url).then(res => {
             const data = res.data;
             setRoute({
                 userOptions: data[0]["replies"].split("|"),
