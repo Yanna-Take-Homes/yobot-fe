@@ -38,8 +38,10 @@ const RegisterForm = () => {
             <Form.Item name="firstName" rules={[{ required: true, message: "Please input your First Name!" }]}>
                 <Input type="text" placeholder="First Name" />
             </Form.Item>
-            <Form.Item name="email" rules={[{ required: true, message: "Please input your email!" }]}>
-                <Input type="text" placeholder="Email" />
+            <Form.Item name="email" rules={
+                [{ required: true, message: "Please input your email!" },
+                { type: "email", message: "Please input a valid email!" }]
+            }> <Input type="text" placeholder="Email" />
             </Form.Item>
             <Button type="primary" htmlType="submit">Register</Button>
         </FormCtn>
