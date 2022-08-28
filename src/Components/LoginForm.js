@@ -21,7 +21,7 @@ const LoginForm = () => {
 
     return (
         <AuthFormCtn form={form} onFinish={loginUser}>
-            <h1>Sign In!</h1>
+            <h2>Login</h2>
             <FormItem name="username" rules={[{ required: true, message: "Please input your username!" }]}>
                 <Input type="text" placeholder="Username" />
             </FormItem>

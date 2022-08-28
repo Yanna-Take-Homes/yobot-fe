@@ -14,7 +14,16 @@ const NavCtn = styled(Row)`{
 }`
 
 const Links = styled(Row)`{
-    width: 300px;
+  width: 300px;
+  margin-left: 10px;
+}`
+
+const CursiveHeader = styled.h1`{
+  font-family: 'Parisienne', cursive;
+  font-size: 40px;
+  letter-spacing: 5px;
+  margin-left: 50px;
+  font-weight: bold;
 }`
 
 const Nav = () => {
@@ -28,11 +37,14 @@ const Nav = () => {
 
     return (
         <NavCtn justify={"space-between"} align={"middle"}>
-            <Links align={"middle"} justify={"space-around"}>
-                <Link to="/">Home</Link>
-                <Link to="/chat">New Chat</Link>
-                <Link to="/past-chats">Past Chats</Link>
-            </Links>
+            <Row align={"middle"} justify={"space-around"}>
+                <CursiveHeader>Yobot</CursiveHeader>
+                <Links align={"middle"} justify={"space-around"}>
+                    <Link to="/">Home</Link>
+                    <Link to="/chat">New Chat</Link>
+                    <Link to="/past-chats">Past Chats</Link>
+                </Links>
+            </Row>
              <DefaultBlueBtn size={"large"} type={"default"} onClick={logout}>{username ? "Logout" : "Get Started"}</DefaultBlueBtn>
         </NavCtn>
     );
