@@ -43,14 +43,14 @@ const Home = () => {
     const navigate = useNavigate();
     const [action, setAction] = React.useState(null);
 
-    const actionHandler = (e) => {
+    const actionHandler = (btnName) => {
         if(!username) {
-            if( e.target.name === "aquaBtn" )setAction("register");
-            else setAction("login");
+            if( btnName === "aquaBtn" )setAction("register");
+            else if( btnName === "tomatoBtn" ) setAction("login");
         }
         else {
-            if( e.target.name === "aquaBtn" ) navigate("/chat");
-            else navigate("/past-chats");
+            if( btnName === "aquaBtn" ) navigate("/chat");
+            else if( btnName === "tomatoBtn" ) navigate("/past-chats");
         }
     }
 
@@ -60,10 +60,10 @@ const Home = () => {
                 <PrimaryHeader>Welcome to YoBot{username && `, ${username}`}!</PrimaryHeader>
                 <p>What would you like to do?</p>
                 <ActionButtons justify={"space-around"}>
-                    <DefaultAquaBtn name={"aquaBtn"} size={"large"} type="default" onClick={ actionHandler } >
+                    <DefaultAquaBtn size={"large"} type="default" onClick={ () => actionHandler("aquaBtn") } >
                         {username ? "Start New Lesson" : "Register"}
                     </DefaultAquaBtn>
-                    <DefaultTomatoBtn size={"large"} type="default" onClick={ actionHandler } >
+                    <DefaultTomatoBtn size={"large"} type="default" onClick={ () => actionHandler("tomatoBtn") } >
                         {username ? "View Past Lessons" : "Login"}
                     </DefaultTomatoBtn>
                 </ActionButtons>
