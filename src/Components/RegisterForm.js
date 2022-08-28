@@ -1,17 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import axios from "axios";
-import { Input, Button, Form } from "antd";
+import { Input, Button } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { useNavigate } from 'react-router-dom';
 import {setUser} from "../Utils";
-
-const FormCtn = styled(Form)`{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}`
+import {AuthFormCtn, FormItem} from "../Styles/Shared";
 
 const RegisterForm = () => {
     const [form] = useForm();
@@ -27,24 +20,24 @@ const RegisterForm = () => {
     }
 
     return (
-        <FormCtn form={form} onFinish={registerUser}>
+        <AuthFormCtn form={form} onFinish={registerUser}>
             <h1>Create Your Account!</h1>
-            <Form.Item name="username" rules={[{ required: true, message: "Please input your username!" }]}>
+            <FormItem name="username" rules={[{ required: true, message: "Please input your username!" }]}>
                 <Input type="text" placeholder="Username" />
-            </Form.Item>
-            <Form.Item name="password" rules={[{ required: true, message: "Please input your password!" }]}>
-                <Input type="password" placeholder="Password" />
-            </Form.Item>
-            <Form.Item name="firstName" rules={[{ required: true, message: "Please input your First Name!" }]}>
+            </FormItem>
+            <FormItem name="firstName" rules={[{ required: true, message: "Please input your First Name!" }]}>
                 <Input type="text" placeholder="First Name" />
-            </Form.Item>
-            <Form.Item name="email" rules={
+            </FormItem>
+            <FormItem name="email" rules={
                 [{ required: true, message: "Please input your email!" },
                 { type: "email", message: "Please input a valid email!" }]
             }> <Input type="text" placeholder="Email" />
-            </Form.Item>
+            </FormItem>
+            <FormItem name="password" rules={[{ required: true, message: "Please input your password!" }]}>
+                <Input.Password type="password" placeholder="Password" />
+            </FormItem>
             <Button type="primary" htmlType="submit">Register</Button>
-        </FormCtn>
+        </AuthFormCtn>
     );
 }
 
