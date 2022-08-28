@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import {PrimaryHeader, WrapperDivCol, bgColor} from "../Styles/shared";
+import {PrimaryHeader, WrapperDivCol, bgColor} from "../Styles/Shared";
 import RegisterForm from "../Components/RegisterForm";
 import LoginForm from "../Components/LoginForm";
-import {Button, Row} from "antd";
+import {Row} from "antd";
 import {checkIfLoggedIn} from "../Utils";
 import {useNavigate} from "react-router-dom";
+import {DefaultAquaBtn, DefaultTomatoBtn} from "../Styles/Buttons";
 
 const HomeWrapper = styled(WrapperDivCol)`{
     background-color: #fcfcfb;
@@ -29,21 +30,10 @@ const Text = styled(WrapperDivCol)`{
     border: none;
 }`
 
-const Btns = styled(Row)`{
+const ActionButtons = styled(Row)`{
     margin-top: 20px;
     margin-bottom: 40px;
-}`
-
-const PrimaryBtn = styled(Button)`{
-    border: solid 2px #00f8c9;
-    color: #00f8c9;
-    font-weight: bold;
-    margin-right: 15px;
-}`
-
-const SecondaryBtn = styled(Button)`{
-    border: solid 1.5px #ff6e3c;
-    color: #ff6e3c;
+    width: 375px;
 }`
 
 const Home = () => {
@@ -51,26 +41,31 @@ const Home = () => {
     const navigate = useNavigate();
     const [action, setAction] = React.useState(null);
 
+    const actionHandler = (e) => {
+        if(!username) {
+            if( e.target.name === "aquaBtn" )setAction("register");
+            else setAction("login");
+        }
+        else {
+            if( e.target.name === "aquaBtn" ) navigate("/chat");
+            else navigate("/past-chats");
+        }
+    }
+
     return (
         <HomeWrapper>
             <Text>
                 <PrimaryHeader>Welcome to YoBot{`, ${username}`}!</PrimaryHeader>
                 <p>What would you like to do?</p>
-                {
-                    username ? <div>
-                        <Btns justify={"space-around"}>
-                            <PrimaryBtn size={"large"} type="default" onClick={()=>navigate("/chat")}>Start New Lesson</PrimaryBtn>
-                            <SecondaryBtn size={"large"} type="default" onClick={()=>navigate("/past-chats")}>View Past Lessons</SecondaryBtn>
-                        </Btns>
-                        { action === "register" ? <RegisterForm /> : action === "login" ? <LoginForm /> : null}
-                    </div> : <div>
-                        <Btns justify={"space-around"}>
-                            <PrimaryBtn size={"large"} type="default" onClick={()=>setAction("register")}>Register</PrimaryBtn>
-                            <SecondaryBtn size={"large"} type="default" onClick={()=>setAction("login")}>Login</SecondaryBtn>
-                        </Btns>
-                        { action === "register" ? <RegisterForm /> : action === "login" ? <LoginForm /> : null}
-                    </div>
-                }
+                <ActionButtons justify={"space-around"}>
+                    <DefaultAquaBtn name={"aquaBtn"} size={"large"} type="default" onClick={ actionHandler } >
+                        {username ? "Start New Lesson" : "Register"}
+                    </DefaultAquaBtn>
+                    <DefaultTomatoBtn size={"large"} type="default" onClick={ actionHandler } >
+                        {username ? "View Past Lessons" : "Login"}
+                    </DefaultTomatoBtn>
+                    { action === "register" ? <RegisterForm /> : action === "login" ? <LoginForm /> : null}
+                </ActionButtons>
             </Text>
         </HomeWrapper>
     );

@@ -4,7 +4,8 @@ import axios from "axios";
 import {Button, Input} from "antd";
 import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
-import {bgColor, DefaultBtn, PrimaryHeader, WrapperDivCol} from "../Styles/shared";
+import {bgColor, PrimaryHeader, WrapperDivCol} from "../Styles/Shared";
+import {DefaultBlueBtn} from "../Styles/Buttons";
 
 const ChatWrapper = styled(WrapperDivCol)`{
     background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/8adff1c4-ab1b-4927-b7cf-68304bd1975b/yobot.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220828%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220828T002911Z&X-Amz-Expires=86400&X-Amz-Signature=ee8324300ce67ddc7bb06a66bce5b69ca6f7101c77495433d354978fafb13b68&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22yobot.jpg%22&x-id=GetObject");
@@ -23,7 +24,7 @@ const ChatCtn = styled(WrapperDivCol)`{
     padding: 30px;
 }`
 
-const Blurb = styled(DefaultBtn)`{}`;
+const Blurb = styled(DefaultBlueBtn)`{}`;
 
 const Chat = () => {
     const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Chat = () => {
                 <div>
                     { route && route.userOptions[0].length>0 && route.userOptions.map((blurb, idx) => <Blurb onClick={()=>nextReply(idx)} key={idx}>{blurb}</Blurb>) }
                     { route && !route.userOptions[0].length>0 && <Input/>}
-                    { route && !route.userOptions[0].length>0 && <Button  onClick={()=>nextReply(0)}>Reply</Button>}
+                    { route && !route.userOptions[0].length>0 && <Button onClick={()=>nextReply(0)}>Reply</Button>}
                 </div>
             </ChatCtn>
         </ChatWrapper>

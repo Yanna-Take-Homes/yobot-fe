@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {Button, Row} from "antd";
+import {Row} from "antd";
+import {DefaultBlueBtn} from "../Styles/Buttons";
 
 const FooterCtn = styled(Row)`{
   height: 12vh;
@@ -8,9 +9,7 @@ const FooterCtn = styled(Row)`{
   padding-right: 29px;
 }`
 
-const SecondaryBtn = styled(Button)`{
-    border: solid 1.5px #1990ff;
-    color: #1990ff;
+const GetSupportBtn = styled(DefaultBlueBtn)`{
     width: 500px;
     margin-left: 50px;
 }`
@@ -18,7 +17,7 @@ const SecondaryBtn = styled(Button)`{
 const Footer = () => {
     return (
         <FooterCtn justify={"flex-start"} align={"middle"}>
-            <SecondaryBtn size={"large"} type={"default"}>Get Support</SecondaryBtn>
+            <GetSupportBtn size={"large"} type={"default"}>Get Support</GetSupportBtn>
         </FooterCtn>
     );
 }

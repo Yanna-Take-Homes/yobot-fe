@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
-import {Button, Row} from "antd";
+import {Row} from "antd";
 import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
-import {bgColor} from "../Styles/shared";
+import {bgColor} from "../Styles/Shared";
+import {DefaultBlueBtn} from "../Styles/Buttons";
 
 const NavCtn = styled(Row)`{
   height: 8vh;
@@ -14,11 +15,6 @@ const NavCtn = styled(Row)`{
 
 const Links = styled(Row)`{
     width: 300px;
-}`
-
-const DefaultBtn = styled(Button)`{
-  border: solid 1.5px #1990ff;
-  color: #1990ff;
 }`
 
 const Nav = () => {
@@ -37,7 +33,7 @@ const Nav = () => {
                 <Link to="/chat">New Chat</Link>
                 <Link to="/past-chats">Past Chats</Link>
             </Links>
-             <DefaultBtn size={"large"} type={"default"} onClick={logout}>{username ? "Logout" : "Get Started"}</DefaultBtn>
+             <DefaultBlueBtn size={"large"} type={"default"} onClick={logout}>{username ? "Logout" : "Get Started"}</DefaultBlueBtn>
         </NavCtn>
     );
 }
