@@ -33,7 +33,9 @@ const Text = styled(WrapperDivCol)`{
 const ActionButtons = styled(Row)`{
     margin-top: 20px;
     margin-bottom: 40px;
-    width: 375px;
+    button {
+      margin-right: 15px;
+    }
 }`
 
 const Home = () => {
@@ -55,7 +57,7 @@ const Home = () => {
     return (
         <HomeWrapper>
             <Text>
-                <PrimaryHeader>Welcome to YoBot{`, ${username}`}!</PrimaryHeader>
+                    <PrimaryHeader>Welcome to YoBot{username && `, ${username}`}!</PrimaryHeader>
                 <p>What would you like to do?</p>
                 <ActionButtons justify={"space-around"}>
                     <DefaultAquaBtn name={"aquaBtn"} size={"large"} type="default" onClick={ actionHandler } >
@@ -64,8 +66,8 @@ const Home = () => {
                     <DefaultTomatoBtn size={"large"} type="default" onClick={ actionHandler } >
                         {username ? "View Past Lessons" : "Login"}
                     </DefaultTomatoBtn>
-                    { action === "register" ? <RegisterForm /> : action === "login" ? <LoginForm /> : null}
                 </ActionButtons>
+                { action === "register" ? <RegisterForm /> : action === "login" ? <LoginForm /> : null}
             </Text>
         </HomeWrapper>
     );

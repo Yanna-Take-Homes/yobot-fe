@@ -23,7 +23,7 @@ const Nav = () => {
 
     const logout = () => {
         localStorage.clear();
-        navigate("/chat");
+        navigate("/?logout=true");
     }
 
     return (
