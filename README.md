@@ -1,8 +1,16 @@
+## App is live on:
+
+https://yobot.netlify.app/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn`
+
+Installs all the dependencies needed into node_modules folder
 
 ### `yarn start`
 
