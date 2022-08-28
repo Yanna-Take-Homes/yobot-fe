@@ -4,24 +4,30 @@ import {Link} from "react-router-dom";
 import {Button, Row} from "antd";
 import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
+import {bgColor} from "../Styles/shared";
 
 const NavCtn = styled(Row)`{
   height: 8vh;
-  box-shadow: 0 0 20px -7px rgba(0, 0, 0, 0.5);
   padding-right: 29px;
+  background-color: ${bgColor};
 }`
 
 const Links = styled(Row)`{
     width: 300px;
 }`
 
+const DefaultBtn = styled(Button)`{
+  border: solid 1.5px #1990ff;
+  color: #1990ff;
+}`
+
 const Nav = () => {
-    const username =  checkIfLoggedIn();
+    const username = checkIfLoggedIn();
     const navigate = useNavigate();
 
     const logout = () => {
         localStorage.clear();
-        navigate("/");
+        navigate("/chat");
     }
 
     return (
@@ -31,7 +37,7 @@ const Nav = () => {
                 <Link to="/chat">New Chat</Link>
                 <Link to="/past-chats">Past Chats</Link>
             </Links>
-            { username ? <Button type={"primary"} onClick={logout}>Logout</Button> : <Link to="/auth">Get Started</Link> }
+             <DefaultBtn size={"large"} type={"default"} onClick={logout}>{username ? "Logout" : "Get Started"}</DefaultBtn>
         </NavCtn>
     );
 }

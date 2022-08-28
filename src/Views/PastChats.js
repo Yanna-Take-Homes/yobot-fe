@@ -4,13 +4,11 @@ import axios from "axios";
 import {Button} from "antd";
 import {checkIfLoggedIn} from "../Utils";
 import {useNavigate} from "react-router-dom";
+import {PrimaryHeader, WrapperDivCol} from "../Styles/shared";
 
-const PastChatsWrapper = styled.div`{
-  display: flex;
+const PastChatsWrapper = styled(WrapperDivCol)`{
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 92vh;
 }`
 
 const PastChats = () => {
@@ -36,9 +34,9 @@ const PastChats = () => {
 
     return (
         <PastChatsWrapper>
-            {username && <h1>Welcome Back, {username}</h1>}
-            {chats && chats.length ? chats.map((chat,idx) => (<h1 key={idx}>{chat["lesson_name"]}</h1>) ): <h1>You've not done any lessons yet!</h1>}
-            <Button type={"primary"} href={"/chat"}>Start New Chat</Button>
+            {username && <PrimaryHeader>Welcome Back, {username}</PrimaryHeader>}
+            {chats && chats.length ? chats.map((chat,idx) => (<p key={idx}>{chat["lesson_name"]}</p>)): <p>You've not done any lessons yet!</p>}
+            <Button type={"link"} href={"/chat"}>Start New Chat</Button>
         </PastChatsWrapper>
     );
 }
