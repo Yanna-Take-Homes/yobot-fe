@@ -23,7 +23,7 @@ const Nav = () => {
 
     const logout = () => {
         localStorage.clear();
-        navigate("/?logout=true");
+        navigate("/?");
     }
 
     return (

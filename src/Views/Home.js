@@ -57,7 +57,7 @@ const Home = () => {
     return (
         <HomeWrapper>
             <Text>
-                    <PrimaryHeader>Welcome to YoBot{username && `, ${username}`}!</PrimaryHeader>
+                <PrimaryHeader>Welcome to YoBot{username && `, ${username}`}!</PrimaryHeader>
                 <p>What would you like to do?</p>
                 <ActionButtons justify={"space-around"}>
                     <DefaultAquaBtn name={"aquaBtn"} size={"large"} type="default" onClick={ actionHandler } >
