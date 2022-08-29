@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
 import {bgColor, PrimaryHeader, WrapperDivCol} from "../Styles/Shared";
 import {DefaultBlueBtn} from "../Styles/Buttons";
-import yobot from "./yobot.png";
+import yobot from "./yobot.jpg";
 
 const ChatWrapper = styled(WrapperDivCol)`{
     background-image: url(${yobot});
