@@ -7,10 +7,11 @@ import {Row} from "antd";
 import {checkIfLoggedIn} from "../Utils";
 import {useNavigate} from "react-router-dom";
 import {DefaultAquaBtn, DefaultTomatoBtn} from "../Styles/Buttons";
+import dalle from "./dalle.png";
 
 const HomeWrapper = styled(WrapperDivCol)`{
     background-color: #fcfcfb;
-    background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/bb9986e7-c53b-4b49-ab50-9c95a44b9be5/DALLE_2022-08-26_05.58.58.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220828%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220828T005047Z&X-Amz-Expires=86400&X-Amz-Signature=ba9369e9139f6eae194c5cc168a14aa4cec69bbbd4e6e6ec0cb7dbcc8615ffb2&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22DALL%25C2%25B7E%25202022-08-26%252005.58.58.png%22&x-id=GetObject");
+    background-image: url(${dalle});
     background-repeat: no-repeat;
     background-position: center left;
     background-size: 45% 100%;
