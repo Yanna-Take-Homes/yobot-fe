@@ -45,6 +45,9 @@ const BotText = styled.p`{
 
 const UserText = styled(DefaultBlueBtn)`{
   margin-left: 15px;
+   span {
+    pointer-events: none;
+  }
 }`;
 
 const ChatRow = styled.div`{
@@ -89,19 +92,21 @@ const Chat = () => {
         }).catch(err => {alert(err)});
     }
 
-    useEffect(() => {
-        if(!username) return navigate("/");
-        getRoutes().catch(() => alert("sorry! that didn't work"));
-        //eslint-disable-next-line
-    }, []);
-
-    const showNextReplies = (route,userOpt) => {
+    const showNextReplies = (route,userOpt,e) => {
+        e.preventDefault();
+        e.target.disabled = true;
         const clickedReplyIdx = route.userOptions.indexOf(userOpt);
         const nextRouteIdx = Number(route.routes[clickedReplyIdx]);
         const nextRoute = lessonArr[nextRouteIdx-1];
         const newAugArr = augmentedArr.concat(nextRoute);
         setAugmentedArr(newAugArr);
     }
+
+    useEffect(() => {
+        if(!username) return navigate("/");
+        getRoutes().catch(() => alert("sorry! that didn't work"));
+        //eslint-disable-next-line
+    }, []);
 
     return (
         <ChatWrapper>
@@ -112,7 +117,7 @@ const Chat = () => {
                         <BotReplies>{ route && route.botOptions.map((botOpt,idx) =>
                             <BotText key={idx}> { botOpt } </BotText> )} </BotReplies>
                         <UserReplies> { route && route.userOptions.map((userOpt,idx) =>
-                            <UserText key={idx} onClick={()=>showNextReplies(route, userOpt )}>{  userOpt }</UserText> )} </UserReplies>
+                            <UserText key={idx} onClick={(e)=>showNextReplies(route, userOpt, e )}>{  userOpt }</UserText> )} </UserReplies>
                     </ChatRow>
                 )}
             </ChatCtn>
