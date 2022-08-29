@@ -7,7 +7,7 @@ import {Row} from "antd";
 import {checkIfLoggedIn} from "../Utils";
 import {useNavigate} from "react-router-dom";
 import {DefaultAquaBtn, DefaultTomatoBtn} from "../Styles/Buttons";
-import dalle from "./dalle.png";
+import dalle from "../Assets/dalle.png";
 
 const HomeWrapper = styled(WrapperDivCol)`{
     background-color: #fcfcfb;

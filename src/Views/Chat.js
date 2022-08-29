@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {Row} from "antd";
+import {Row, Input} from "antd";
 import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
 import {bgColor, PrimaryHeader, WrapperDivCol} from "../Styles/Shared";
 import {DefaultBlueBtn} from "../Styles/Buttons";
-import yobot from "./yobot.jpg";
+import yobot from "../Assets/yobot.jpg";
 
 const ChatWrapper = styled(WrapperDivCol)`{
     background-image: url(${yobot});
@@ -36,7 +36,6 @@ const ChatCtn = styled(WrapperDivCol)`{
     ::-webkit-scrollbar-thumb {
         border-radius: 4px;
         background-color: rgba(0, 0, 0, .2);
-        //box-shadow: 0 0 1px rgba(255, 255, 255, .5);
     }
 }`
 
@@ -95,8 +94,12 @@ const Chat = () => {
     const showNextReplies = (route,userOpt,e) => {
         e.preventDefault();
         e.target.disabled = true;
-        const clickedReplyIdx = route.userOptions.indexOf(userOpt);
-        const nextRouteIdx = Number(route.routes[clickedReplyIdx]);
+        let nextRouteIdx;
+        if(!userOpt.length) nextRouteIdx = Number(route.routes[0]);
+        else {
+            const clickedReplyIdx = route.userOptions.indexOf(userOpt);
+            nextRouteIdx = Number(route.routes[clickedReplyIdx]);
+        }
         const nextRoute = lessonArr[nextRouteIdx-1];
         const newAugArr = augmentedArr.concat(nextRoute);
         setAugmentedArr(newAugArr);
@@ -114,10 +117,19 @@ const Chat = () => {
                 { lessonName && <PrimaryHeader>Let's talk about {lessonName}</PrimaryHeader> }
                 { augmentedArr && augmentedArr.map( (route, idx) =>
                     <ChatRow key={`chat_row_${idx}`} justify={"space-between"}>
-                        <BotReplies>{ route && route.botOptions.map((botOpt,idx) =>
-                            <BotText key={idx}> { botOpt } </BotText> )} </BotReplies>
-                        <UserReplies> { route && route.userOptions.map((userOpt,idx) =>
-                            <UserText key={idx} onClick={(e)=>showNextReplies(route, userOpt, e )}>{  userOpt }</UserText> )} </UserReplies>
+                        <BotReplies>
+                            { route && route.botOptions.map((botOpt,idx) => <BotText key={idx}>{ botOpt }</BotText> )}
+                        </BotReplies>
+                        <UserReplies>
+                            { route && route.userOptions[0]===""
+                            ? <Input placeholder={"type a reply, then press enter"} onPressEnter={(e)=>showNextReplies(route,"",e )} />
+                            : route && route.userOptions.map((userOpt,idx) =>
+                                    <UserText key={idx} onClick={(e)=>showNextReplies(route, userOpt, e )}>
+                                        {  userOpt }
+                                    </UserText>
+                                )
+                            }
+                        </UserReplies>
                     </ChatRow>
                 )}
             </ChatCtn>
