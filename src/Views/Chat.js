@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {Button, Input} from "antd";
+import {Row} from "antd";
 import {useNavigate} from "react-router-dom";
 import {checkIfLoggedIn} from "../Utils";
 import {bgColor, PrimaryHeader, WrapperDivCol} from "../Styles/Shared";
@@ -12,7 +12,7 @@ const ChatWrapper = styled(WrapperDivCol)`{
     background-image: url(${yobot});
     background-repeat: no-repeat;
     background-position: center left;
-    background-size: 45% 100%;
+    background-size: 35% 100%;
     align-items: center;
     justify-content: space-around;
     background-color: #fcfcfb;
@@ -20,67 +20,101 @@ const ChatWrapper = styled(WrapperDivCol)`{
 
 const ChatCtn = styled(WrapperDivCol)`{
     border-left: 2px solid ${bgColor};
-    width: 50%;
+    width: 60%;
+    height: 95%;
     align-self: flex-end;
-    padding: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    overflow: auto;
+    scroll-behavior: smooth;
+  
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 20px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, .2);
+        //box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    }
 }`
 
-const Blurb = styled(DefaultBlueBtn)`{}`;
+const BotText = styled.p`{
+}`;
+
+const UserText = styled(DefaultBlueBtn)`{
+  margin-left: 15px;
+}`;
+
+const ChatRow = styled.div`{
+  border-bottom: 1px solid ${bgColor};
+}`;
+
+const BotReplies = styled.div`{
+  margin-top: 30px;
+}`;
+
+const UserReplies = styled(Row)`{
+  margin-bottom: 20px;
+  margin-left:50%;
+}`;
+
 
 const Chat = () => {
     const navigate = useNavigate();
     const username = checkIfLoggedIn();
 
     const [lessonArr, setLessonArr] = useState(null);
-    const [route, setRoute] = useState(null);
     const [lessonName, setLessonName] = useState(null);
+    const [augmentedArr, setAugmentedArr] = useState([]);
 
-    const getRoute = async () => {
+    const getRoutes = async () => {
         const routeId = localStorage.getItem("last_route");
         const url = `/routes/for-lesson/${routeId}`;
-        await axios.create({headers:{
-                Authorization: localStorage.getItem("token"),
-            }}).get(url).then(res => {
-            const data = res.data;
-            setRoute({
-                userOptions: data[0]["replies"].split("|"),
-                botBlurbs: data[0]["text"].split("|")
-            });
-            setLessonName(data[0]["lesson_name"]);
-            setLessonArr(data.slice(1));
-        });
-    }
 
-    const nextReply = (idx) => {
-        let nextRoute;
-        (idx!==0) && lessonArr.shift();
-        nextRoute = lessonArr.shift();
-        const userOptions = nextRoute["replies"].split("|");
-        const botBlurbs = nextRoute["text"].split("|");
-        setRoute({
-            userOptions: userOptions,
-            botBlurbs: botBlurbs
-        });
+        await axios.create({headers:{ Authorization: localStorage.getItem("token")}}).get(url).then(res => {
+            const data = res.data;
+            setLessonName(data[0]["lesson_name"]);
+            const augArr = data.map(route => {
+                return {
+                    id: route["id"],
+                    userOptions: route["replies"].split("|"),
+                    botOptions: route["text"].split("|"),
+                    routes: route["routes"].split("|"),
+                }
+            })
+            setLessonArr(augArr);
+            setAugmentedArr([augArr[0]]);
+        }).catch(err => {alert(err)});
     }
 
     useEffect(() => {
         if(!username) return navigate("/");
-        getRoute().catch(() => alert("sorry! that didn't work"));
+        getRoutes().catch(() => alert("sorry! that didn't work"));
         //eslint-disable-next-line
     }, []);
+
+    const showNextReplies = (route,userOpt) => {
+        const clickedReplyIdx = route.userOptions.indexOf(userOpt);
+        const nextRouteIdx = Number(route.routes[clickedReplyIdx]);
+        const nextRoute = lessonArr[nextRouteIdx-1];
+        const newAugArr = augmentedArr.concat(nextRoute);
+        setAugmentedArr(newAugArr);
+    }
 
     return (
         <ChatWrapper>
             <ChatCtn>
-                <div>
-                    { lessonName && <PrimaryHeader>Let's talk about {lessonName}</PrimaryHeader> }
-                    { route && route.botBlurbs.map((blurb, i) => <p key={i}>{blurb}</p>) }
-                </div>
-                <div>
-                    { route && route.userOptions[0].length>0 && route.userOptions.map((blurb, idx) => <Blurb onClick={()=>nextReply(idx)} key={idx}>{blurb}</Blurb>) }
-                    { route && !route.userOptions[0].length>0 && <Input/>}
-                    { route && !route.userOptions[0].length>0 && <Button onClick={()=>nextReply(0)}>Reply</Button>}
-                </div>
+                { lessonName && <PrimaryHeader>Let's talk about {lessonName}</PrimaryHeader> }
+                { augmentedArr && augmentedArr.map( (route, idx) =>
+                    <ChatRow key={`chat_row_${idx}`} justify={"space-between"}>
+                        <BotReplies>{ route && route.botOptions.map((botOpt,idx) =>
+                            <BotText key={idx}> { botOpt } </BotText> )} </BotReplies>
+                        <UserReplies> { route && route.userOptions.map((userOpt,idx) =>
+                            <UserText key={idx} onClick={()=>showNextReplies(route, userOpt )}>{  userOpt }</UserText> )} </UserReplies>
+                    </ChatRow>
+                )}
             </ChatCtn>
         </ChatWrapper>
     );
